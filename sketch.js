@@ -3,52 +3,79 @@ let wave = [];
 let x_shift = 300;
 
 function setup() {
-  createCanvas(displayWidth,displayHeight);
+  createCanvas(1440, 900);
 }
+
+let centre_x = (1440 / 2) - 400;
+let centre_y = 900 / 2;
+
+let r_ = 100;
 
 function draw() {
   background(0);
-  
-  let r = 100;
-  
+
   stroke(255);
   noFill();
-  strokeWeight(5);
+  strokeWeight(3);
 
-  let centre = {
-    x: displayWidth/2 - 400,
-    y: displayHeight/2
+  // circle(centre_x, centre_y, 2 * r_);
+
+  let x = centre_x;
+  let y = centre_y;
+
+  for (let i = 0; i < 10; i++) {
+
+    let px = x;
+    let py = y;
+
+    let n = 2 * i + 1;
+
+    let r = r_ * (4 / (n * PI));
+
+    x += r * cos(n * time);
+    y += r * sin(n * time);
+
+    line(px, py, x, y);
+    
+    // cycles and epicyles
+    strokeWeight(r/50);
+    noFill();
+    circle(px, py, 2 * r);
+    fill(255);
+    circle(x, y, 5, wave[0]);
+
   }
 
-  circle(centre.x, centre.y, 2*r);
+  strokeWeight(3);
 
-  let boundary = {
-    x: r*cos(time) + centre.x,
-    y: r*sin(time) + centre.y
-  }
+  // horizontal line from last point
+  line(x, y, centre_x + x_shift, wave[0]);
 
-  wave.unshift(boundary.y);
+  // vertical axis
+  line(centre_x + x_shift, displayHeight / 2 - 2 * r_,
+  centre_x + x_shift, displayHeight / 2 + 2 * r_);
 
-  line(centre.x, centre.y, boundary.x, boundary.y);
-  fill(255);
-  circle(boundary.x, boundary.y, 20, wave[0]);
+  // horizontal axis
+  line(centre_x + x_shift, centre_y, centre_x + x_shift + 640, centre_y);
 
-  line(boundary.x, boundary.y, boundary.x + x_shift - r*cos(time), wave[0]);
+  wave.unshift(y);
 
-  strokeWeight(2);
-  line(boundary.x + x_shift - r*cos(time), displayHeight/2 - 2*r,
-   boundary.x + x_shift - r*cos(time), displayHeight/2 + 2*r);
-
-  fill(100,50,200);
-  stroke(100,50,200);
+  fill(50, 200, 220);
+  stroke(50, 200, 220);
   strokeWeight(5);
-  circle(boundary.x + x_shift - r*cos(time), boundary.y, 20, wave[0]);
+  circle(centre_x + x_shift, y, r_/10, wave[0]);
 
   beginShape();
+  noFill();
+  strokeWeight(2);
   for (let i = 0; i < wave.length; i++) {
-    point(boundary.x + x_shift - r*cos(time) + i, wave[i]);
+    vertex(centre_x + x_shift + i, wave[i]);
   }
   endShape();
 
-  time += 0.01;
+  time -= 0.05;
+
+  if (wave.length > 600) {
+    wave.pop();
+  }
 }
