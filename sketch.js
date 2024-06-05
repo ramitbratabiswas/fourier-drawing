@@ -35,14 +35,15 @@ function draw() {
     x += r * cos(n * time);
     y += r * sin(n * time);
 
-    line(px, py, x, y);
-    
     // cycles and epicyles
     strokeWeight(r/50);
     noFill();
     circle(px, py, 2 * r);
     fill(255);
     circle(x, y, 5, wave[0]);
+    
+    strokeWeight(3);
+    line(x, y, px, py);
 
   }
 
