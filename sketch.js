@@ -26,9 +26,9 @@ function draw() {
     let px = x;
     let py = y;
 
-    let n = 2 * i + 1;
+    let n = 2 * i + 2;
 
-    let r = r_ * (4 / (n * PI));
+    let r = r_ * (-1)**(i+1) * (2 / (n * PI));
 
     x += r * cos(n * time);
     y += r * sin(n * time);
