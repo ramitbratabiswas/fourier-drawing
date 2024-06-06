@@ -9,21 +9,19 @@ function setup() {
 let centre_x = (1440 / 2) - 400;
 let centre_y = 900 / 2;
 
-let r_ = 100;
+let r_ = 120;
 
 function draw() {
-  background(0);
+  background(0,30,30);
 
   stroke(255);
   noFill();
   strokeWeight(3);
 
-  // circle(centre_x, centre_y, 2 * r_);
-
   let x = centre_x;
   let y = centre_y;
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 100; i++) {
 
     let px = x;
     let py = y;
@@ -36,28 +34,37 @@ function draw() {
     y += r * sin(n * time);
 
     // cycles and epicyles
-    strokeWeight(r/50);
+    strokeWeight(r/40);
     noFill();
     circle(px, py, 2 * r);
     fill(255);
     circle(x, y, 5, wave[0]);
     
-    strokeWeight(3);
     line(x, y, px, py);
 
   }
 
-  strokeWeight(3);
+  strokeWeight(4);
 
   // horizontal line from last point
   line(x, y, centre_x + x_shift, wave[0]);
 
   // vertical axis
-  line(centre_x + x_shift, displayHeight / 2 - 2 * r_,
-  centre_x + x_shift, displayHeight / 2 + 2 * r_);
+  line(centre_x + x_shift, centre_y - 200,
+  centre_x + x_shift, centre_y + 200);
 
   // horizontal axis
   line(centre_x + x_shift, centre_y, centre_x + x_shift + 640, centre_y);
+
+  // gridlines
+  strokeWeight(1);
+  stroke(255, 128);
+  for (let i = -3; i < 4; i++) {
+    line(centre_x + x_shift, centre_y + i*60, centre_x + x_shift + 640, centre_y + i*60);
+  }
+  for (let i = 0; i < 11; i++) {
+    line(centre_x + x_shift + i*60, centre_y - 200, centre_x + x_shift + i*60, centre_y + 200);
+  }
 
   wave.unshift(y);
 
@@ -74,7 +81,7 @@ function draw() {
   }
   endShape();
 
-  time -= 0.05;
+  time -= 1/(8*PI);
 
   if (wave.length > 600) {
     wave.pop();
