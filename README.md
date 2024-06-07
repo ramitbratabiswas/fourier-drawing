@@ -1,1 +1,1 @@
-# fourier-drawing
+# understanding fourier series with epicycles
