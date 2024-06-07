@@ -57,8 +57,8 @@ function draw() {
   line(centre_x + x_shift, centre_y, centre_x + x_shift + 640, centre_y);
 
   // gridlines
-  strokeWeight(1);
-  stroke(255, 128);
+  strokeWeight(4);
+  stroke(255, 50);
   for (let i = -3; i < 4; i++) {
     line(centre_x + x_shift, centre_y + i*60, centre_x + x_shift + 640, centre_y + i*60);
   }
